@@ -1,2 +1,2 @@
 # Explorer
-simple Explorer program developed for educational purposes.
+Simple Explorer program developed for educational purposes.

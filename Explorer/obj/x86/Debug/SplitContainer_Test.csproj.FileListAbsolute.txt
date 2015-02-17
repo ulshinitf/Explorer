@@ -1,0 +1,27 @@
+E:\STUDENTS\15 поток\СТ\СП\СП-1522\C #\SplitContainer_Test\SplitContainer_Test\bin\Debug\SplitContainer_Test.exe
+E:\STUDENTS\15 поток\СТ\СП\СП-1522\C #\SplitContainer_Test\SplitContainer_Test\bin\Debug\SplitContainer_Test.pdb
+E:\STUDENTS\15 поток\СТ\СП\СП-1522\C #\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\STUDENTS\15 поток\СТ\СП\СП-1522\C #\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\SplitContainer_Test.Form1.resources
+E:\STUDENTS\15 поток\СТ\СП\СП-1522\C #\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\SplitContainer_Test.Properties.Resources.resources
+E:\STUDENTS\15 поток\СТ\СП\СП-1522\C #\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\GenerateResource.read.1.tlog
+E:\STUDENTS\15 поток\СТ\СП\СП-1522\C #\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\GenerateResource.write.1.tlog
+E:\STUDENTS\15 поток\СТ\СП\СП-1522\C #\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\SplitContainer_Test.exe
+E:\STUDENTS\15 поток\СТ\СП\СП-1522\C #\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\SplitContainer_Test.pdb
+C:\Documents and Settings\Dima\Рабочий стол\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\SplitContainer_Test.exe
+C:\Documents and Settings\Dima\Рабочий стол\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\SplitContainer_Test.pdb
+C:\Documents and Settings\Dima\Рабочий стол\SplitContainer_Test\SplitContainer_Test\bin\Debug\SplitContainer_Test.exe
+C:\Documents and Settings\Dima\Рабочий стол\SplitContainer_Test\SplitContainer_Test\bin\Debug\SplitContainer_Test.pdb
+C:\Documents and Settings\Dima\Рабочий стол\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Dima\Рабочий стол\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\SplitContainer_Test.Form1.resources
+C:\Documents and Settings\Dima\Рабочий стол\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\SplitContainer_Test.Properties.Resources.resources
+C:\Documents and Settings\Dima\Рабочий стол\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Documents and Settings\Dima\Рабочий стол\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\Projects\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\SplitContainer_Test.exe
+D:\Projects\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\SplitContainer_Test.pdb
+D:\Projects\SplitContainer_Test\SplitContainer_Test\bin\Debug\SplitContainer_Test.exe
+D:\Projects\SplitContainer_Test\SplitContainer_Test\bin\Debug\SplitContainer_Test.pdb
+D:\Projects\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Projects\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\SplitContainer_Test.Form1.resources
+D:\Projects\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\SplitContainer_Test.Properties.Resources.resources
+D:\Projects\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\Projects\SplitContainer_Test\SplitContainer_Test\obj\x86\Debug\GenerateResource.write.1.tlog
