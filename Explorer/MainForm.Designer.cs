@@ -49,9 +49,9 @@
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.mainTreeView = new System.Windows.Forms.TreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.mainListView = new System.Windows.Forms.ListView();
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.asdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuStrip.SuspendLayout();
@@ -97,13 +97,13 @@
             // refreshToolStripMenuItem
             // 
             this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.refreshToolStripMenuItem.Text = "Refresh";
             // 
             // ExitMenuItem
             // 
             this.ExitMenuItem.Name = "ExitMenuItem";
-            this.ExitMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ExitMenuItem.Size = new System.Drawing.Size(123, 22);
             this.ExitMenuItem.Text = "Exit";
             this.ExitMenuItem.Click += new System.EventHandler(this.ExitMenuItem_Click);
             // 
@@ -174,35 +174,35 @@
             // iconsView
             // 
             this.iconsView.Name = "iconsView";
-            this.iconsView.Size = new System.Drawing.Size(152, 22);
+            this.iconsView.Size = new System.Drawing.Size(120, 22);
             this.iconsView.Text = "Icons";
             this.iconsView.Click += new System.EventHandler(this.iconsView_Click);
             // 
             // imagesView
             // 
             this.imagesView.Name = "imagesView";
-            this.imagesView.Size = new System.Drawing.Size(152, 22);
+            this.imagesView.Size = new System.Drawing.Size(120, 22);
             this.imagesView.Text = "Images";
             this.imagesView.Click += new System.EventHandler(this.imagesView_Click);
             // 
             // tilesView
             // 
             this.tilesView.Name = "tilesView";
-            this.tilesView.Size = new System.Drawing.Size(152, 22);
+            this.tilesView.Size = new System.Drawing.Size(120, 22);
             this.tilesView.Text = "Tiles";
             this.tilesView.Click += new System.EventHandler(this.tilesView_Click);
             // 
             // listView
             // 
             this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(152, 22);
+            this.listView.Size = new System.Drawing.Size(120, 22);
             this.listView.Text = "List";
             this.listView.Click += new System.EventHandler(this.listView_Click);
             // 
             // tableView
             // 
             this.tableView.Name = "tableView";
-            this.tableView.Size = new System.Drawing.Size(152, 22);
+            this.tableView.Size = new System.Drawing.Size(120, 22);
             this.tableView.Text = "Table";
             this.tableView.Click += new System.EventHandler(this.tableView_Click);
             // 
@@ -238,27 +238,27 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.treeView1);
+            this.splitContainer2.Panel1.Controls.Add(this.mainTreeView);
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.listView1);
+            this.splitContainer2.Panel2.Controls.Add(this.mainListView);
             this.splitContainer2.Size = new System.Drawing.Size(568, 293);
             this.splitContainer2.SplitterDistance = 189;
             this.splitContainer2.TabIndex = 0;
             // 
-            // treeView1
+            // mainTreeView
             // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.ImageIndex = 0;
-            this.treeView1.ImageList = this.imageList1;
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.SelectedImageIndex = 0;
-            this.treeView1.Size = new System.Drawing.Size(189, 293);
-            this.treeView1.TabIndex = 0;
-            this.treeView1.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeExpand);
-            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.mainTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainTreeView.ImageIndex = 0;
+            this.mainTreeView.ImageList = this.imageList1;
+            this.mainTreeView.Location = new System.Drawing.Point(0, 0);
+            this.mainTreeView.Name = "mainTreeView";
+            this.mainTreeView.SelectedImageIndex = 0;
+            this.mainTreeView.Size = new System.Drawing.Size(189, 293);
+            this.mainTreeView.TabIndex = 0;
+            this.mainTreeView.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.mainTreeView_BeforeExpand);
+            this.mainTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.mainTreeView_AfterSelect);
             // 
             // imageList1
             // 
@@ -268,17 +268,17 @@
             this.imageList1.Images.SetKeyName(1, "file_mini.bmp");
             this.imageList1.Images.SetKeyName(2, "localdriver.png");
             // 
-            // listView1
+            // mainListView
             // 
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.LargeImageList = this.imageList2;
-            this.listView1.Location = new System.Drawing.Point(0, 0);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(375, 293);
-            this.listView1.SmallImageList = this.imageList1;
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
+            this.mainListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainListView.LargeImageList = this.imageList2;
+            this.mainListView.Location = new System.Drawing.Point(0, 0);
+            this.mainListView.Name = "mainListView";
+            this.mainListView.Size = new System.Drawing.Size(375, 293);
+            this.mainListView.SmallImageList = this.imageList1;
+            this.mainListView.TabIndex = 0;
+            this.mainListView.UseCompatibleStateImageBehavior = false;
+            this.mainListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.mainListView_MouseDoubleClick);
             // 
             // imageList2
             // 
@@ -328,8 +328,8 @@
         private System.Windows.Forms.ToolStrip addressToolStrip;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.TreeView mainTreeView;
+        private System.Windows.Forms.ListView mainListView;
         private System.Windows.Forms.ToolStripMenuItem FileMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
         private System.Windows.Forms.ImageList imageList1;

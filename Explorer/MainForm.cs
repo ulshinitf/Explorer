@@ -15,7 +15,7 @@ namespace Explorer
         {
             InitializeComponent();
 
-            listView1.ColumnClick += new ColumnClickEventHandler(ClickOnColumn);
+            mainListView.ColumnClick += new ColumnClickEventHandler(ClickOnColumn);
             ColumnHeader c = new ColumnHeader();
             c.Text = "Name";
             c.Width = c.Width + 80;
@@ -23,15 +23,14 @@ namespace Explorer
             c2.Text = "Size";
             c2.Width = c2.Width + 60;
             ColumnHeader c3 = new ColumnHeader();
-            c3.Text = "Type";
-            c3.Width = c3.Width + 60;            
+            c3.Text = "Type";            
             ColumnHeader c4 = new ColumnHeader();
             c4.Text = "Changed";
             c4.Width = c4.Width + 60;
-            listView1.Columns.Add(c);
-            listView1.Columns.Add(c2);
-            listView1.Columns.Add(c3);
-            listView1.Columns.Add(c4);
+            mainListView.Columns.Add(c);
+            mainListView.Columns.Add(c2);
+            mainListView.Columns.Add(c3);
+            mainListView.Columns.Add(c4);
 
             string[] str = Environment.GetLogicalDrives();
             int n=1;
@@ -42,20 +41,20 @@ namespace Explorer
                     TreeNode tn = new TreeNode();
                     tn.Name = s;
                     tn.Text = "Local drive " + s;
-                    treeView1.Nodes.Add(tn.Name, tn.Text, 2);
+                    mainTreeView.Nodes.Add(tn.Name, tn.Text, 2);
                     FileInfo f = new FileInfo(@s);
                     string t = "";
                     string[] str2 = Directory.GetDirectories(@s);
                     foreach (string s2 in str2)
                     {
                         t = s2.Substring(s2.LastIndexOf('\\')+1);
-                        ((TreeNode)treeView1.Nodes[n - 1]).Nodes.Add(s2, t, 0);
+                        ((TreeNode)mainTreeView.Nodes[n - 1]).Nodes.Add(s2, t, 0);
                     }
                 }
                 catch { }
                 n++;
             }
-            foreach (TreeNode tn in treeView1.Nodes)
+            foreach (TreeNode tn in mainTreeView.Nodes)
             {
                 for (int i = 65; i < 91; i++)
                 {
@@ -66,7 +65,7 @@ namespace Explorer
             }
         }
 
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        private void mainTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             string strtmp="";
             if (Adresses.Count != 0)
@@ -87,13 +86,13 @@ namespace Explorer
                 buttonBack.Enabled = false;
             else
                 buttonBack.Enabled = true;
-            listView1.Items.Clear();
+            mainListView.Items.Clear();
             currListViewAdress = e.Node.Name;
             addressTextBox.Text = currListViewAdress;
             //заполнение ListView
             try
             {
-                if (listView1.View != View.Tile)
+                if (mainListView.View != View.Tile)
                 {
                     FileInfo f = new FileInfo(@e.Node.Name);
                     string t = "";
@@ -106,7 +105,7 @@ namespace Explorer
                         t = s2.Substring(s2.LastIndexOf('\\') + 1);
                         lw = new ListViewItem(new string[] { t, "", type, f.LastWriteTime.ToString() }, 0);
                         lw.Name = s2;
-                        listView1.Items.Add(lw);
+                        mainListView.Items.Add(lw);
                     }
                     str2 = Directory.GetFiles(@e.Node.Name);
                     foreach (string s2 in str2)
@@ -116,7 +115,7 @@ namespace Explorer
                         t = s2.Substring(s2.LastIndexOf('\\') + 1);
                         lw = new ListViewItem(new string[] { t, f.Length.ToString() + " bytes", type, f.LastWriteTime.ToString() }, 1);
                         lw.Name = s2;
-                        listView1.Items.Add(lw);
+                        mainListView.Items.Add(lw);
                     }
                 }
                 else
@@ -131,7 +130,7 @@ namespace Explorer
                         t = s2.Substring(s2.LastIndexOf('\\') + 1);
                         lw = new ListViewItem(new string[] { t }, 0);
                         lw.Name = s2;
-                        listView1.Items.Add(lw);
+                        mainListView.Items.Add(lw);
                     }
                     str2 = Directory.GetFiles(@e.Node.Name);
                     foreach (string s2 in str2)
@@ -140,7 +139,7 @@ namespace Explorer
                         t = s2.Substring(s2.LastIndexOf('\\') + 1);
                         lw = new ListViewItem(new string[] { t }, 1);
                         lw.Name = s2;
-                        listView1.Items.Add(lw);
+                        mainListView.Items.Add(lw);
                     }
                 }
             }
@@ -150,18 +149,18 @@ namespace Explorer
 
         private void iconsView_Click(object sender, EventArgs e)
         {
-            listView1.View = View.SmallIcon;
+            mainListView.View = View.SmallIcon;
         }
 
         private void imagesView_Click(object sender, EventArgs e)
         {
-            listView1.View = View.LargeIcon;
+            mainListView.View = View.LargeIcon;
         }
 
         private void tilesView_Click(object sender, EventArgs e)
         {
-            listView1.View = View.Tile;
-            listView1.Items.Clear();
+            mainListView.View = View.Tile;
+            mainListView.Items.Clear();
             FileInfo f = new FileInfo(@currListViewAdress);
             string t = "";
             string[] str2 = Directory.GetDirectories(@currListViewAdress);
@@ -172,7 +171,7 @@ namespace Explorer
                 t = s2.Substring(s2.LastIndexOf('\\') + 1);
                 lw = new ListViewItem(new string[] { t }, 0);
                 lw.Name = s2;
-                listView1.Items.Add(lw);
+                mainListView.Items.Add(lw);
             }
             str2 = Directory.GetFiles(@currListViewAdress);
             foreach (string s2 in str2)
@@ -181,19 +180,19 @@ namespace Explorer
                 t = s2.Substring(s2.LastIndexOf('\\') + 1);
                 lw = new ListViewItem(new string[] { t }, 1);
                 lw.Name = s2;
-                listView1.Items.Add(lw);
+                mainListView.Items.Add(lw);
             }
         }
 
         private void listView_Click(object sender, EventArgs e)
         {
-            listView1.View = View.List;
+            mainListView.View = View.List;
         }
 
         private void tableView_Click(object sender, EventArgs e)
         {
-            listView1.View = View.Details;
-            listView1.Items.Clear();
+            mainListView.View = View.Details;
+            mainListView.Items.Clear();
             FileInfo f = new FileInfo(@currListViewAdress);
             string t = "";
             string[] str2 = Directory.GetDirectories(@currListViewAdress);
@@ -205,7 +204,7 @@ namespace Explorer
                 t = s2.Substring(s2.LastIndexOf('\\') + 1);
                 lw = new ListViewItem(new string[] { t, "", type, f.LastWriteTime.ToString() }, 0);
                 lw.Name = s2;
-                listView1.Items.Add(lw);
+                mainListView.Items.Add(lw);
             }
             str2 = Directory.GetFiles(@currListViewAdress);
             foreach (string s2 in str2)
@@ -215,15 +214,15 @@ namespace Explorer
                 t = s2.Substring(s2.LastIndexOf('\\') + 1);
                 lw = new ListViewItem(new string[] { t, f.Length.ToString() + " bytes", type, f.LastWriteTime.ToString() }, 1);
                 lw.Name = s2;
-                listView1.Items.Add(lw);
+                mainListView.Items.Add(lw);
             }
         }
 
-        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void mainListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (listView1.SelectedItems[0].Text.IndexOf('.') == -1)
+            if (mainListView.SelectedItems[0].Text.IndexOf('.') == -1)
             {
-                Adresses.Add(listView1.SelectedItems[0].Name);
+                Adresses.Add(mainListView.SelectedItems[0].Name);
                 currIndex++;
                 currListViewAdress = ((string)Adresses[currIndex]);
                 if (currIndex + 1 == Adresses.Count)
@@ -234,15 +233,15 @@ namespace Explorer
                     buttonBack.Enabled = false;
                 else
                     buttonBack.Enabled = true;
-                currListViewAdress = listView1.SelectedItems[0].Name;
+                currListViewAdress = mainListView.SelectedItems[0].Name;
                 addressTextBox.Text = currListViewAdress;
-                FileInfo f = new FileInfo(@listView1.SelectedItems[0].Name);
+                FileInfo f = new FileInfo(mainListView.SelectedItems[0].Name);
                 string t = "";
-                string[] str2 = Directory.GetDirectories(@listView1.SelectedItems[0].Name);
-                string[] str3 = Directory.GetFiles(@listView1.SelectedItems[0].Name);
-                listView1.Items.Clear();
+                string[] str2 = Directory.GetDirectories(mainListView.SelectedItems[0].Name);
+                string[] str3 = Directory.GetFiles(mainListView.SelectedItems[0].Name);
+                mainListView.Items.Clear();
                 ListViewItem lw = new ListViewItem();
-                if (listView1.View == View.Details)
+                if (mainListView.View == View.Details)
                 {
                     foreach (string s2 in str2)
                     {
@@ -251,7 +250,7 @@ namespace Explorer
                         t = s2.Substring(s2.LastIndexOf('\\') + 1);
                         lw = new ListViewItem(new string[] { t, "", type, f.LastWriteTime.ToString() }, 0);
                         lw.Name = s2;
-                        listView1.Items.Add(lw);
+                        mainListView.Items.Add(lw);
                     }
                     foreach (string s2 in str3)
                     {
@@ -260,7 +259,7 @@ namespace Explorer
                         t = s2.Substring(s2.LastIndexOf('\\') + 1);
                         lw = new ListViewItem(new string[] { t, f.Length.ToString() + " bytes", type, f.LastWriteTime.ToString() }, 1);
                         lw.Name = s2;
-                        listView1.Items.Add(lw);
+                        mainListView.Items.Add(lw);
                     }
                 }
                 else
@@ -271,7 +270,7 @@ namespace Explorer
                         t = s2.Substring(s2.LastIndexOf('\\') + 1);
                         lw = new ListViewItem(new string[] { t }, 0);
                         lw.Name = s2;
-                        listView1.Items.Add(lw);
+                        mainListView.Items.Add(lw);
                     }
                     foreach (string s2 in str3)
                     {
@@ -279,14 +278,14 @@ namespace Explorer
                         t = s2.Substring(s2.LastIndexOf('\\') + 1);
                         lw = new ListViewItem(new string[] { t }, 1);
                         lw.Name = s2;
-                        listView1.Items.Add(lw);
+                        mainListView.Items.Add(lw);
                     }
                 }
             }
             else
             {
                 System.Diagnostics.Process MyProc = new System.Diagnostics.Process();
-                MyProc.StartInfo.FileName = @listView1.SelectedItems[0].Name;
+                MyProc.StartInfo.FileName = mainListView.SelectedItems[0].Name;
                 MyProc.Start();
             }
         }
@@ -294,16 +293,16 @@ namespace Explorer
         {
             if (e.Column == 0)
             {
-                if (listView1.Sorting == SortOrder.Descending)
-                    listView1.Sorting = SortOrder.Ascending;
+                if (mainListView.Sorting == SortOrder.Descending)
+                    mainListView.Sorting = SortOrder.Ascending;
                 else
-                    listView1.Sorting = SortOrder.Descending;
+                    mainListView.Sorting = SortOrder.Descending;
             }
         }
 
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            listView1.Refresh();
+            mainListView.Refresh();
         }
 
         private void ExitMenuItem_Click(object sender, EventArgs e)
@@ -311,7 +310,7 @@ namespace Explorer
             Application.Exit();
         }
 
-        private void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+        private void mainTreeView_BeforeExpand(object sender, TreeViewCancelEventArgs e)
         {
             int i = 0;
 
@@ -352,9 +351,9 @@ namespace Explorer
                 string t = "";
                 string[] str2 = Directory.GetDirectories(@currListViewAdress);
                 string[] str3 = Directory.GetFiles(@currListViewAdress);
-                listView1.Items.Clear();
+                mainListView.Items.Clear();
                 ListViewItem lw = new ListViewItem();
-                if (listView1.View == View.Details)
+                if (mainListView.View == View.Details)
                 {
                     foreach (string s2 in str2)
                     {
@@ -363,7 +362,7 @@ namespace Explorer
                         t = s2.Substring(s2.LastIndexOf('\\') + 1);
                         lw = new ListViewItem(new string[] { t, "", type, f.LastWriteTime.ToString() }, 0);
                         lw.Name = s2;
-                        listView1.Items.Add(lw);
+                        mainListView.Items.Add(lw);
                     }
                     foreach (string s2 in str3)
                     {
@@ -372,7 +371,7 @@ namespace Explorer
                         t = s2.Substring(s2.LastIndexOf('\\') + 1);
                         lw = new ListViewItem(new string[] { t, f.Length.ToString() + " bytes", type, f.LastWriteTime.ToString() }, 1);
                         lw.Name = s2;
-                        listView1.Items.Add(lw);
+                        mainListView.Items.Add(lw);
                     }
                 }
                 else
@@ -383,7 +382,7 @@ namespace Explorer
                         t = s2.Substring(s2.LastIndexOf('\\') + 1);
                         lw = new ListViewItem(new string[] { t }, 0);
                         lw.Name = s2;
-                        listView1.Items.Add(lw);
+                        mainListView.Items.Add(lw);
                     }
                     foreach (string s2 in str3)
                     {
@@ -391,7 +390,7 @@ namespace Explorer
                         t = s2.Substring(s2.LastIndexOf('\\') + 1);
                         lw = new ListViewItem(new string[] { t }, 1);
                         lw.Name = s2;
-                        listView1.Items.Add(lw);
+                        mainListView.Items.Add(lw);
                     }
                 }
             }
@@ -416,9 +415,9 @@ namespace Explorer
                 string t = "";
                 string[] str2 = Directory.GetDirectories(@currListViewAdress);
                 string[] str3 = Directory.GetFiles(@currListViewAdress);
-                listView1.Items.Clear();
+                mainListView.Items.Clear();
                 ListViewItem lw = new ListViewItem();
-                if (listView1.View == View.Details)
+                if (mainListView.View == View.Details)
                 {
                     foreach (string s2 in str2)
                     {
@@ -427,7 +426,7 @@ namespace Explorer
                         t = s2.Substring(s2.LastIndexOf('\\') + 1);
                         lw = new ListViewItem(new string[] { t, "", type, f.LastWriteTime.ToString() }, 0);
                         lw.Name = s2;
-                        listView1.Items.Add(lw);
+                        mainListView.Items.Add(lw);
                     }
                     foreach (string s2 in str3)
                     {
@@ -436,7 +435,7 @@ namespace Explorer
                         t = s2.Substring(s2.LastIndexOf('\\') + 1);
                         lw = new ListViewItem(new string[] { t, f.Length.ToString() + " bytes", type, f.LastWriteTime.ToString() }, 1);
                         lw.Name = s2;
-                        listView1.Items.Add(lw);
+                        mainListView.Items.Add(lw);
                     }
                 }
                 else
@@ -447,7 +446,7 @@ namespace Explorer
                         t = s2.Substring(s2.LastIndexOf('\\') + 1);
                         lw = new ListViewItem(new string[] { t }, 0);
                         lw.Name = s2;
-                        listView1.Items.Add(lw);
+                        mainListView.Items.Add(lw);
                     }
                     foreach (string s2 in str3)
                     {
@@ -455,7 +454,7 @@ namespace Explorer
                         t = s2.Substring(s2.LastIndexOf('\\') + 1);
                         lw = new ListViewItem(new string[] { t }, 1);
                         lw.Name = s2;
-                        listView1.Items.Add(lw);
+                        mainListView.Items.Add(lw);
                     }
                 }
             }
@@ -482,9 +481,9 @@ namespace Explorer
                         buttonBack.Enabled = true;
                     FileInfo f = new FileInfo(addressTextBox.Text);
                     string t = "";                    
-                    listView1.Items.Clear();
+                    mainListView.Items.Clear();
                     ListViewItem lw = new ListViewItem();
-                    if (listView1.View == View.Details)
+                    if (mainListView.View == View.Details)
                     {
                         foreach (string s2 in str2)
                         {
@@ -493,7 +492,7 @@ namespace Explorer
                             t = s2.Substring(s2.LastIndexOf('\\') + 1);
                             lw = new ListViewItem(new string[] { t, "", type, f.LastWriteTime.ToString() }, 0);
                             lw.Name = s2;
-                            listView1.Items.Add(lw);
+                            mainListView.Items.Add(lw);
                         }
                         foreach (string s2 in str3)
                         {
@@ -502,7 +501,7 @@ namespace Explorer
                             t = s2.Substring(s2.LastIndexOf('\\') + 1);
                             lw = new ListViewItem(new string[] { t, f.Length.ToString() + " bytes", type, f.LastWriteTime.ToString() }, 1);
                             lw.Name = s2;
-                            listView1.Items.Add(lw);
+                            mainListView.Items.Add(lw);
                         }
                     }
                     else
@@ -513,7 +512,7 @@ namespace Explorer
                             t = s2.Substring(s2.LastIndexOf('\\') + 1);
                             lw = new ListViewItem(new string[] { t }, 0);
                             lw.Name = s2;
-                            listView1.Items.Add(lw);
+                            mainListView.Items.Add(lw);
                         }
                         foreach (string s2 in str3)
                         {
@@ -521,7 +520,7 @@ namespace Explorer
                             t = s2.Substring(s2.LastIndexOf('\\') + 1);
                             lw = new ListViewItem(new string[] { t }, 1);
                             lw.Name = s2;
-                            listView1.Items.Add(lw);
+                            mainListView.Items.Add(lw);
                         }
                     }
                 }
@@ -554,9 +553,9 @@ namespace Explorer
                         buttonBack.Enabled = true;
                     FileInfo f = new FileInfo(addressTextBox.Text + "\\");
                     string t = "";
-                    listView1.Items.Clear();
+                    mainListView.Items.Clear();
                     ListViewItem lw = new ListViewItem();
-                    if (listView1.View == View.Details)
+                    if (mainListView.View == View.Details)
                     {
                         foreach (string s2 in str2)
                         {
@@ -565,7 +564,7 @@ namespace Explorer
                             t = s2.Substring(s2.LastIndexOf('\\') + 1);
                             lw = new ListViewItem(new string[] { t, "", type, f.LastWriteTime.ToString() }, 0);
                             lw.Name = s2;
-                            listView1.Items.Add(lw);
+                            mainListView.Items.Add(lw);
                         }
                         foreach (string s2 in str3)
                         {
@@ -574,7 +573,7 @@ namespace Explorer
                             t = s2.Substring(s2.LastIndexOf('\\') + 1);
                             lw = new ListViewItem(new string[] { t, f.Length.ToString() + " bytes", type, f.LastWriteTime.ToString() }, 1);
                             lw.Name = s2;
-                            listView1.Items.Add(lw);
+                            mainListView.Items.Add(lw);
                         }
                     }
                     else
@@ -585,7 +584,7 @@ namespace Explorer
                             t = s2.Substring(s2.LastIndexOf('\\') + 1);
                             lw = new ListViewItem(new string[] { t }, 0);
                             lw.Name = s2;
-                            listView1.Items.Add(lw);
+                            mainListView.Items.Add(lw);
                         }
                         foreach (string s2 in str3)
                         {
@@ -593,7 +592,7 @@ namespace Explorer
                             t = s2.Substring(s2.LastIndexOf('\\') + 1);
                             lw = new ListViewItem(new string[] { t }, 1);
                             lw.Name = s2;
-                            listView1.Items.Add(lw);
+                            mainListView.Items.Add(lw);
                         }
                     }
                 }
