@@ -46,7 +46,7 @@
             this.tilesView = new System.Windows.Forms.ToolStripMenuItem();
             this.listView = new System.Windows.Forms.ToolStripMenuItem();
             this.tableView = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.buttonUp = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.mainTreeView = new System.Windows.Forms.TreeView();
@@ -69,7 +69,7 @@
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 411);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(568, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(532, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -81,7 +81,7 @@
             this.aboutToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(568, 24);
+            this.mainMenuStrip.Size = new System.Drawing.Size(532, 24);
             this.mainMenuStrip.TabIndex = 1;
             this.mainMenuStrip.Text = "menuStrip1";
             // 
@@ -121,10 +121,10 @@
             this.buttonForward,
             this.addressTextBox,
             this.viewsList,
-            this.toolStripButton3});
+            this.buttonUp});
             this.addressToolStrip.Location = new System.Drawing.Point(0, 24);
             this.addressToolStrip.Name = "addressToolStrip";
-            this.addressToolStrip.Size = new System.Drawing.Size(568, 25);
+            this.addressToolStrip.Size = new System.Drawing.Size(532, 25);
             this.addressToolStrip.TabIndex = 2;
             this.addressToolStrip.Text = "toolStrip1";
             // 
@@ -206,15 +206,14 @@
             this.tableView.Text = "Table";
             this.tableView.Click += new System.EventHandler(this.tableView_Click);
             // 
-            // toolStripButton3
+            // buttonUp
             // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(24, 22);
-            this.toolStripButton3.Text = "Up";
-            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            this.buttonUp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonUp.Image = ((System.Drawing.Image)(resources.GetObject("buttonUp.Image")));
+            this.buttonUp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonUp.Name = "buttonUp";
+            this.buttonUp.Size = new System.Drawing.Size(24, 22);
+            this.buttonUp.Text = "Up";
             // 
             // splitContainer1
             // 
@@ -226,7 +225,7 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(568, 362);
+            this.splitContainer1.Size = new System.Drawing.Size(532, 362);
             this.splitContainer1.SplitterDistance = 293;
             this.splitContainer1.TabIndex = 3;
             // 
@@ -243,8 +242,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.mainListView);
-            this.splitContainer2.Size = new System.Drawing.Size(568, 293);
-            this.splitContainer2.SplitterDistance = 189;
+            this.splitContainer2.Size = new System.Drawing.Size(532, 293);
+            this.splitContainer2.SplitterDistance = 177;
             this.splitContainer2.TabIndex = 0;
             // 
             // mainTreeView
@@ -255,7 +254,7 @@
             this.mainTreeView.Location = new System.Drawing.Point(0, 0);
             this.mainTreeView.Name = "mainTreeView";
             this.mainTreeView.SelectedImageIndex = 0;
-            this.mainTreeView.Size = new System.Drawing.Size(189, 293);
+            this.mainTreeView.Size = new System.Drawing.Size(177, 293);
             this.mainTreeView.TabIndex = 0;
             this.mainTreeView.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.mainTreeView_BeforeExpand);
             this.mainTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.mainTreeView_AfterSelect);
@@ -274,7 +273,7 @@
             this.mainListView.LargeImageList = this.imageList2;
             this.mainListView.Location = new System.Drawing.Point(0, 0);
             this.mainListView.Name = "mainListView";
-            this.mainListView.Size = new System.Drawing.Size(375, 293);
+            this.mainListView.Size = new System.Drawing.Size(351, 293);
             this.mainListView.SmallImageList = this.imageList1;
             this.mainListView.TabIndex = 0;
             this.mainListView.UseCompatibleStateImageBehavior = false;
@@ -297,7 +296,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(568, 433);
+            this.ClientSize = new System.Drawing.Size(532, 433);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.addressToolStrip);
             this.Controls.Add(this.statusStrip1);
@@ -344,7 +343,7 @@
         private System.Windows.Forms.ToolStripButton buttonForward;
         private System.Windows.Forms.ToolStripTextBox addressTextBox;
         private System.Windows.Forms.ToolStripMenuItem asdToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton buttonUp;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }

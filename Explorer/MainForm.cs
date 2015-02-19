@@ -14,9 +14,7 @@ namespace Explorer
         public MainForm()
         {
             InitializeComponent();
-
             InitializeColumns();
-
             InitializeTreeView();
         }
 
@@ -33,18 +31,11 @@ namespace Explorer
                 currIndex = 0;
             }            
             Adresses.Add(e.Node.Name);
+
             currIndex++;
 
-            if (currIndex + 1 == Adresses.Count)
-                buttonForward.Enabled = false;
-            else
-                buttonForward.Enabled = true;
-            if (currIndex - 1 == -1)
-                buttonBack.Enabled = false;
-            else
-                buttonBack.Enabled = true;
+            CheckButtonsState();
             mainListView.Items.Clear();
-
             GetItemsOnTreeViewSelect(e);
         }
 
@@ -85,14 +76,9 @@ namespace Explorer
                 Adresses.Add(mainListView.SelectedItems[0].Name);
                 currIndex++;
                 currListViewAddress = ((string)Adresses[currIndex]);
-                if (currIndex + 1 == Adresses.Count)
-                    buttonForward.Enabled = false;
-                else
-                    buttonForward.Enabled = true;
-                if(currIndex - 1 == -1)
-                    buttonBack.Enabled = false;
-                else
-                    buttonBack.Enabled = true;
+
+                CheckButtonsState();
+
                 currListViewAddress = mainListView.SelectedItems[0].Name;
                 addressTextBox.Text = currListViewAddress;
 
@@ -100,9 +86,9 @@ namespace Explorer
             }
             else
             {
-                System.Diagnostics.Process MyProc = new System.Diagnostics.Process();
-                MyProc.StartInfo.FileName = mainListView.SelectedItems[0].Name;
-                MyProc.Start();
+                System.Diagnostics.Process Proc = new System.Diagnostics.Process();
+                Proc.StartInfo.FileName = mainListView.SelectedItems[0].Name;
+                Proc.Start();
             }
         }
 
@@ -144,14 +130,9 @@ namespace Explorer
             {
                 currIndex--;
                 currListViewAddress = ((string)Adresses[currIndex]);
-                if (currIndex + 1 == Adresses.Count)
-                    buttonForward.Enabled = false;
-                else
-                    buttonForward.Enabled = true;
-                if (currIndex - 1 == -1)
-                    buttonBack.Enabled = false;
-                else
-                    buttonBack.Enabled = true;
+
+                CheckButtonsState();
+
                 addressTextBox.Text = currListViewAddress;
 
                 GetItems(currListViewAddress);
@@ -164,14 +145,9 @@ namespace Explorer
             {
                 currIndex++;
                 currListViewAddress = ((string)Adresses[currIndex]);
-                if (currIndex + 1 == Adresses.Count)
-                    buttonForward.Enabled = false;
-                else
-                    buttonForward.Enabled = true;
-                if (currIndex - 1 == -1)
-                    buttonBack.Enabled = false;
-                else
-                    buttonBack.Enabled = true;
+
+                CheckButtonsState();
+
                 addressTextBox.Text = currListViewAddress;
 
                 GetItems(currListViewAddress);
@@ -184,19 +160,11 @@ namespace Explorer
             {
                 try
                 {
-                    string[] str2 = Directory.GetDirectories(addressTextBox.Text);
-                    string[] str3 = Directory.GetFiles(addressTextBox.Text);
                     currIndex++;
                     currListViewAddress = addressTextBox.Text;
                     Adresses.Add(addressTextBox.Text);
-                    if (currIndex + 1 == Adresses.Count)
-                        buttonForward.Enabled = false;
-                    else
-                        buttonForward.Enabled = true;
-                    if (currIndex - 1 == -1)
-                        buttonBack.Enabled = false;
-                    else
-                        buttonBack.Enabled = true;
+
+                    CheckButtonsState();
 
                     GetItems(currListViewAddress);
                 }
@@ -207,26 +175,18 @@ namespace Explorer
             }
         }
 
-        private void toolStripButton3_Click(object sender, EventArgs e)
+        private void buttonUp_Click(object sender, EventArgs e)
         {
-            int lio = addressTextBox.Text.LastIndexOf('\\');
-            if (lio != -1)
+            int index = addressTextBox.Text.LastIndexOf('\\');
+            if (index != -1)
             {
-                addressTextBox.Text = addressTextBox.Text.Substring(0, lio);
+                addressTextBox.Text = addressTextBox.Text.Substring(0, index);
                 try
                 {
-                    string[] str2 = Directory.GetDirectories(addressTextBox.Text + "\\");
-                    string[] str3 = Directory.GetFiles(addressTextBox.Text + "\\");
                     currIndex--;
-                    currListViewAddress = addressTextBox.Text;
-                    if (currIndex + 1 == Adresses.Count)
-                        buttonForward.Enabled = false;
-                    else
-                        buttonForward.Enabled = true;
-                    if (currIndex - 1 == -1)
-                        buttonBack.Enabled = false;
-                    else
-                        buttonBack.Enabled = true;
+                    currListViewAddress = addressTextBox.Text + "\\";
+
+                    CheckButtonsState();
 
                     GetItems(currListViewAddress);
                 }
@@ -260,17 +220,19 @@ namespace Explorer
         private void InitializeColumns()
         {
             mainListView.ColumnClick += new ColumnClickEventHandler(ColumnNameClick);
+
             ColumnHeader c = new ColumnHeader();
             c.Text = "Name";
-            c.Width = c.Width + 80;
+            c.Width += 60;
             ColumnHeader c2 = new ColumnHeader();
             c2.Text = "Size";
-            c2.Width = c2.Width + 60;
+            c2.Width += 30;
             ColumnHeader c3 = new ColumnHeader();
             c3.Text = "Type";
             ColumnHeader c4 = new ColumnHeader();
             c4.Text = "Changed";
-            c4.Width = c4.Width + 60;
+            c4.Width += 55;
+
             mainListView.Columns.Add(c);
             mainListView.Columns.Add(c2);
             mainListView.Columns.Add(c3);
@@ -381,6 +343,18 @@ namespace Explorer
                 else
                     mainListView.Sorting = SortOrder.Descending;
             }
+        }
+
+        private void CheckButtonsState()
+        {
+            if (currIndex + 1 == Adresses.Count)
+                buttonForward.Enabled = false;
+            else
+                buttonForward.Enabled = true;
+            if (currIndex - 1 == -1)
+                buttonBack.Enabled = false;
+            else
+                buttonBack.Enabled = true;
         }
 
     }
