@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Collections;
@@ -154,17 +148,17 @@ namespace Explorer
 
         }
 
-        private void списокИконокToolStripMenuItem_Click(object sender, EventArgs e)
+        private void iconsView_Click(object sender, EventArgs e)
         {
             listView1.View = View.SmallIcon;
         }
 
-        private void списокИзображенийToolStripMenuItem_Click(object sender, EventArgs e)
+        private void imagesView_Click(object sender, EventArgs e)
         {
             listView1.View = View.LargeIcon;
         }
 
-        private void плиткиToolStripMenuItem_Click(object sender, EventArgs e)
+        private void tilesView_Click(object sender, EventArgs e)
         {
             listView1.View = View.Tile;
             listView1.Items.Clear();
@@ -191,12 +185,12 @@ namespace Explorer
             }
         }
 
-        private void списокToolStripMenuItem_Click(object sender, EventArgs e)
+        private void listView_Click(object sender, EventArgs e)
         {
             listView1.View = View.List;
         }
 
-        private void таблицаToolStripMenuItem_Click(object sender, EventArgs e)
+        private void tableView_Click(object sender, EventArgs e)
         {
             listView1.View = View.Details;
             listView1.Items.Clear();
@@ -307,7 +301,7 @@ namespace Explorer
             }
         }
 
-        private void обновитьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
             listView1.Refresh();
         }
@@ -615,5 +609,15 @@ namespace Explorer
             MessageBox.Show("Explorer © 2015", "About Explorer", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Back: buttonBack_Click(buttonBack, null);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

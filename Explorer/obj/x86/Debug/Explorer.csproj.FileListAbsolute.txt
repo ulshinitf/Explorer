@@ -16,3 +16,12 @@ D:\Projects\Explorer\Explorer\obj\x86\Debug\GenerateResource.read.1.tlog
 D:\Projects\Explorer\Explorer\obj\x86\Debug\GenerateResource.write.1.tlog
 D:\Projects\Explorer\Explorer\obj\x86\Debug\Explorer.exe
 D:\Projects\Explorer\Explorer\obj\x86\Debug\Explorer.pdb
+D:\Projects\git\Explorer\Explorer\obj\x86\Debug\Explorer.exe
+D:\Projects\git\Explorer\Explorer\obj\x86\Debug\Explorer.pdb
+D:\Projects\git\Explorer\Explorer\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Projects\git\Explorer\Explorer\obj\x86\Debug\Explorer.MainForm.resources
+D:\Projects\git\Explorer\Explorer\obj\x86\Debug\Explorer.Properties.Resources.resources
+D:\Projects\git\Explorer\Explorer\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\Projects\git\Explorer\Explorer\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\Projects\git\Explorer\Explorer\bin\Debug\Explorer.exe
+D:\Projects\git\Explorer\Explorer\bin\Debug\Explorer.pdb

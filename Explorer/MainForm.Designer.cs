@@ -33,18 +33,20 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.FileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addressToolStrip = new System.Windows.Forms.ToolStrip();
             this.buttonBack = new System.Windows.Forms.ToolStripButton();
             this.buttonForward = new System.Windows.Forms.ToolStripButton();
             this.addressTextBox = new System.Windows.Forms.ToolStripTextBox();
+            this.viewsList = new System.Windows.Forms.ToolStripDropDownButton();
+            this.iconsView = new System.Windows.Forms.ToolStripMenuItem();
+            this.imagesView = new System.Windows.Forms.ToolStripMenuItem();
+            this.tilesView = new System.Windows.Forms.ToolStripMenuItem();
+            this.listView = new System.Windows.Forms.ToolStripMenuItem();
+            this.tableView = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.списокИконокToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.списокИзображенийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.плиткиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.списокToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.таблицаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
@@ -52,10 +54,8 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.asdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuStrip.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.addressToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -94,27 +94,39 @@
             this.FileMenuItem.Size = new System.Drawing.Size(35, 20);
             this.FileMenuItem.Text = "File";
             // 
+            // refreshToolStripMenuItem
+            // 
+            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.refreshToolStripMenuItem.Text = "Refresh";
+            // 
             // ExitMenuItem
             // 
             this.ExitMenuItem.Name = "ExitMenuItem";
             this.ExitMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.ExitMenuItem.Text = "Закрыть";
+            this.ExitMenuItem.Text = "Exit";
             this.ExitMenuItem.Click += new System.EventHandler(this.ExitMenuItem_Click);
             // 
-            // toolStrip1
+            // aboutToolStripMenuItem
             // 
-            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.aboutToolStripMenuItem.Text = "About";
+            // 
+            // addressToolStrip
+            // 
+            this.addressToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.addressToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.buttonBack,
             this.buttonForward,
             this.addressTextBox,
-            this.toolStripDropDownButton1,
+            this.viewsList,
             this.toolStripButton3});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(568, 25);
-            this.toolStrip1.TabIndex = 2;
-            this.toolStrip1.Text = "toolStrip1";
+            this.addressToolStrip.Location = new System.Drawing.Point(0, 24);
+            this.addressToolStrip.Name = "addressToolStrip";
+            this.addressToolStrip.Size = new System.Drawing.Size(568, 25);
+            this.addressToolStrip.TabIndex = 2;
+            this.addressToolStrip.Text = "toolStrip1";
             // 
             // buttonBack
             // 
@@ -144,6 +156,56 @@
             this.addressTextBox.Size = new System.Drawing.Size(413, 25);
             this.addressTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.addressTextBox_KeyDown);
             // 
+            // viewsList
+            // 
+            this.viewsList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.viewsList.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.iconsView,
+            this.imagesView,
+            this.tilesView,
+            this.listView,
+            this.tableView});
+            this.viewsList.Image = ((System.Drawing.Image)(resources.GetObject("viewsList.Image")));
+            this.viewsList.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.viewsList.Name = "viewsList";
+            this.viewsList.Size = new System.Drawing.Size(42, 22);
+            this.viewsList.Text = "View";
+            // 
+            // iconsView
+            // 
+            this.iconsView.Name = "iconsView";
+            this.iconsView.Size = new System.Drawing.Size(152, 22);
+            this.iconsView.Text = "Icons";
+            this.iconsView.Click += new System.EventHandler(this.iconsView_Click);
+            // 
+            // imagesView
+            // 
+            this.imagesView.Name = "imagesView";
+            this.imagesView.Size = new System.Drawing.Size(152, 22);
+            this.imagesView.Text = "Images";
+            this.imagesView.Click += new System.EventHandler(this.imagesView_Click);
+            // 
+            // tilesView
+            // 
+            this.tilesView.Name = "tilesView";
+            this.tilesView.Size = new System.Drawing.Size(152, 22);
+            this.tilesView.Text = "Tiles";
+            this.tilesView.Click += new System.EventHandler(this.tilesView_Click);
+            // 
+            // listView
+            // 
+            this.listView.Name = "listView";
+            this.listView.Size = new System.Drawing.Size(152, 22);
+            this.listView.Text = "List";
+            this.listView.Click += new System.EventHandler(this.listView_Click);
+            // 
+            // tableView
+            // 
+            this.tableView.Name = "tableView";
+            this.tableView.Size = new System.Drawing.Size(152, 22);
+            this.tableView.Text = "Table";
+            this.tableView.Click += new System.EventHandler(this.tableView_Click);
+            // 
             // toolStripButton3
             // 
             this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -153,56 +215,6 @@
             this.toolStripButton3.Size = new System.Drawing.Size(24, 22);
             this.toolStripButton3.Text = "Up";
             this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
-            // 
-            // toolStripDropDownButton1
-            // 
-            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.списокИконокToolStripMenuItem,
-            this.списокИзображенийToolStripMenuItem,
-            this.плиткиToolStripMenuItem,
-            this.списокToolStripMenuItem,
-            this.таблицаToolStripMenuItem});
-            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
-            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(42, 22);
-            this.toolStripDropDownButton1.Text = "View";
-            // 
-            // списокИконокToolStripMenuItem
-            // 
-            this.списокИконокToolStripMenuItem.Name = "списокИконокToolStripMenuItem";
-            this.списокИконокToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.списокИконокToolStripMenuItem.Text = "Список иконок";
-            this.списокИконокToolStripMenuItem.Click += new System.EventHandler(this.списокИконокToolStripMenuItem_Click);
-            // 
-            // списокИзображенийToolStripMenuItem
-            // 
-            this.списокИзображенийToolStripMenuItem.Name = "списокИзображенийToolStripMenuItem";
-            this.списокИзображенийToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.списокИзображенийToolStripMenuItem.Text = "Список изображений";
-            this.списокИзображенийToolStripMenuItem.Click += new System.EventHandler(this.списокИзображенийToolStripMenuItem_Click);
-            // 
-            // плиткиToolStripMenuItem
-            // 
-            this.плиткиToolStripMenuItem.Name = "плиткиToolStripMenuItem";
-            this.плиткиToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.плиткиToolStripMenuItem.Text = "Плитки";
-            this.плиткиToolStripMenuItem.Click += new System.EventHandler(this.плиткиToolStripMenuItem_Click);
-            // 
-            // списокToolStripMenuItem
-            // 
-            this.списокToolStripMenuItem.Name = "списокToolStripMenuItem";
-            this.списокToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.списокToolStripMenuItem.Text = "Список";
-            this.списокToolStripMenuItem.Click += new System.EventHandler(this.списокToolStripMenuItem_Click);
-            // 
-            // таблицаToolStripMenuItem
-            // 
-            this.таблицаToolStripMenuItem.Name = "таблицаToolStripMenuItem";
-            this.таблицаToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.таблицаToolStripMenuItem.Text = "Таблица";
-            this.таблицаToolStripMenuItem.Click += new System.EventHandler(this.таблицаToolStripMenuItem_Click);
             // 
             // splitContainer1
             // 
@@ -281,25 +293,13 @@
             this.asdToolStripMenuItem.Size = new System.Drawing.Size(36, 20);
             this.asdToolStripMenuItem.Text = "asd";
             // 
-            // refreshToolStripMenuItem
-            // 
-            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.refreshToolStripMenuItem.Text = "Refresh";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.aboutToolStripMenuItem.Text = "About";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(568, 433);
             this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.addressToolStrip);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.mainMenuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -307,8 +307,8 @@
             this.Text = "Explorer";
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.addressToolStrip.ResumeLayout(false);
+            this.addressToolStrip.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
@@ -325,7 +325,7 @@
 
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.MenuStrip mainMenuStrip;
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip addressToolStrip;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TreeView treeView1;
@@ -334,12 +334,12 @@
         private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ImageList imageList2;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
-        private System.Windows.Forms.ToolStripMenuItem списокИконокToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem списокИзображенийToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem плиткиToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem списокToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem таблицаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripDropDownButton viewsList;
+        private System.Windows.Forms.ToolStripMenuItem iconsView;
+        private System.Windows.Forms.ToolStripMenuItem imagesView;
+        private System.Windows.Forms.ToolStripMenuItem tilesView;
+        private System.Windows.Forms.ToolStripMenuItem listView;
+        private System.Windows.Forms.ToolStripMenuItem tableView;
         private System.Windows.Forms.ToolStripButton buttonBack;
         private System.Windows.Forms.ToolStripButton buttonForward;
         private System.Windows.Forms.ToolStripTextBox addressTextBox;
