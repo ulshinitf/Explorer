@@ -15,55 +15,12 @@ namespace Explorer
         {
             InitializeComponent();
 
-            mainListView.ColumnClick += new ColumnClickEventHandler(ClickOnColumn);
-            ColumnHeader c = new ColumnHeader();
-            c.Text = "Name";
-            c.Width = c.Width + 80;
-            ColumnHeader c2 = new ColumnHeader();
-            c2.Text = "Size";
-            c2.Width = c2.Width + 60;
-            ColumnHeader c3 = new ColumnHeader();
-            c3.Text = "Type";            
-            ColumnHeader c4 = new ColumnHeader();
-            c4.Text = "Changed";
-            c4.Width = c4.Width + 60;
-            mainListView.Columns.Add(c);
-            mainListView.Columns.Add(c2);
-            mainListView.Columns.Add(c3);
-            mainListView.Columns.Add(c4);
+            InitializeColumns();
 
-            string[] str = Environment.GetLogicalDrives();
-            int n=1;
-            foreach(string s in str)
-            {
-                try
-                {
-                    TreeNode tn = new TreeNode();
-                    tn.Name = s;
-                    tn.Text = "Local drive " + s;
-                    mainTreeView.Nodes.Add(tn.Name, tn.Text, 2);
-                    FileInfo f = new FileInfo(@s);
-                    string t = "";
-                    string[] str2 = Directory.GetDirectories(@s);
-                    foreach (string s2 in str2)
-                    {
-                        t = s2.Substring(s2.LastIndexOf('\\')+1);
-                        ((TreeNode)mainTreeView.Nodes[n - 1]).Nodes.Add(s2, t, 0);
-                    }
-                }
-                catch { }
-                n++;
-            }
-            foreach (TreeNode tn in mainTreeView.Nodes)
-            {
-                for (int i = 65; i < 91; i++)
-                {
-                    char sym = Convert.ToChar(i);
-                    if (tn.Name == sym + ":\\")
-                        tn.SelectedImageIndex = 2;
-                }
-            }
+            InitializeTreeView();
         }
+
+        #region Event Handlers
 
         private void mainTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -87,9 +44,346 @@ namespace Explorer
             else
                 buttonBack.Enabled = true;
             mainListView.Items.Clear();
+
+            GetItemsAfterSelect(e);
+        }
+
+        private void iconsView_Click(object sender, EventArgs e)
+        {
+            mainListView.View = View.SmallIcon;
+        }
+
+        private void imagesView_Click(object sender, EventArgs e)
+        {
+            mainListView.View = View.LargeIcon;
+        }
+
+        private void tilesView_Click(object sender, EventArgs e)
+        {
+            mainListView.View = View.Tile;
+            mainListView.Items.Clear();
+            FileInfo f = new FileInfo(@currListViewAdress);
+            string t = "";
+            string[] str2 = Directory.GetDirectories(@currListViewAdress);
+            ListViewItem lw = new ListViewItem();
+            foreach (string s2 in str2)
+            {
+                f = new FileInfo(@s2);
+                t = s2.Substring(s2.LastIndexOf('\\') + 1);
+                lw = new ListViewItem(new string[] { t }, 0);
+                lw.Name = s2;
+                mainListView.Items.Add(lw);
+            }
+            str2 = Directory.GetFiles(@currListViewAdress);
+            foreach (string s2 in str2)
+            {
+                f = new FileInfo(@s2);
+                t = s2.Substring(s2.LastIndexOf('\\') + 1);
+                lw = new ListViewItem(new string[] { t }, 1);
+                lw.Name = s2;
+                mainListView.Items.Add(lw);
+            }
+        }
+
+        private void listView_Click(object sender, EventArgs e)
+        {
+            mainListView.View = View.List;
+        }
+
+        private void tableView_Click(object sender, EventArgs e)
+        {
+            mainListView.View = View.Details;
+            mainListView.Items.Clear();
+            GetItems();
+        }
+
+        private void mainListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (mainListView.SelectedItems[0].Text.IndexOf('.') == -1)
+            {
+                Adresses.Add(mainListView.SelectedItems[0].Name);
+                currIndex++;
+                currListViewAdress = ((string)Adresses[currIndex]);
+                if (currIndex + 1 == Adresses.Count)
+                    buttonForward.Enabled = false;
+                else
+                    buttonForward.Enabled = true;
+                if(currIndex - 1 == -1)
+                    buttonBack.Enabled = false;
+                else
+                    buttonBack.Enabled = true;
+                currListViewAdress = mainListView.SelectedItems[0].Name;
+                addressTextBox.Text = currListViewAdress;
+
+                GetItems();
+            }
+            else
+            {
+                System.Diagnostics.Process MyProc = new System.Diagnostics.Process();
+                MyProc.StartInfo.FileName = mainListView.SelectedItems[0].Name;
+                MyProc.Start();
+            }
+        }
+
+        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mainListView.Refresh();
+        }
+
+        private void ExitMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void mainTreeView_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+        {
+            int i = 0;
+
+            try
+            {
+                foreach (TreeNode tn in e.Node.Nodes)
+                {
+                    string[] str2 = Directory.GetDirectories(@tn.Name);
+                    foreach (string str in str2)
+                    {
+                        TreeNode temp = new TreeNode();
+                        temp.Name = str;
+                        temp.Text = str.Substring(str.LastIndexOf('\\') + 1);
+                        e.Node.Nodes[i].Nodes.Add(temp);
+                    }
+                    i++;
+                }
+            }
+            catch { }
+        }
+
+        private void buttonBack_Click(object sender, EventArgs e)
+        {
+            if (currIndex - 1 != -1)
+            {
+                currIndex--;
+                currListViewAdress = ((string)Adresses[currIndex]);
+                if (currIndex + 1 == Adresses.Count)
+                    buttonForward.Enabled = false;
+                else
+                    buttonForward.Enabled = true;
+                if (currIndex - 1 == -1)
+                    buttonBack.Enabled = false;
+                else
+                    buttonBack.Enabled = true;
+                addressTextBox.Text = currListViewAdress;
+
+                GetItems();
+            }
+        }
+
+        private void buttonForward_Click(object sender, EventArgs e)
+        {
+            if (currIndex + 1 != Adresses.Count)
+            {
+                currIndex++;
+                currListViewAdress = ((string)Adresses[currIndex]);
+                if (currIndex + 1 == Adresses.Count)
+                    buttonForward.Enabled = false;
+                else
+                    buttonForward.Enabled = true;
+                if (currIndex - 1 == -1)
+                    buttonBack.Enabled = false;
+                else
+                    buttonBack.Enabled = true;
+                addressTextBox.Text = currListViewAdress;
+
+                GetItems();
+            }
+        }
+
+        private void addressTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == (int) Keys.Enter)
+            {
+                try
+                {
+                    string[] str2 = Directory.GetDirectories(addressTextBox.Text);
+                    string[] str3 = Directory.GetFiles(addressTextBox.Text);
+                    currIndex++;
+                    currListViewAdress = addressTextBox.Text;
+                    Adresses.Add(addressTextBox.Text);
+                    if (currIndex + 1 == Adresses.Count)
+                        buttonForward.Enabled = false;
+                    else
+                        buttonForward.Enabled = true;
+                    if (currIndex - 1 == -1)
+                        buttonBack.Enabled = false;
+                    else
+                        buttonBack.Enabled = true;
+
+                    GetItems();
+                }
+                catch
+                {
+                    addressTextBox.Text = currListViewAdress;
+                }
+            }
+        }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            int lio = addressTextBox.Text.LastIndexOf('\\');
+            if (lio != -1)
+            {
+                addressTextBox.Text = addressTextBox.Text.Substring(0, lio);
+                try
+                {
+                    string[] str2 = Directory.GetDirectories(addressTextBox.Text + "\\");
+                    string[] str3 = Directory.GetFiles(addressTextBox.Text + "\\");
+                    currIndex--;
+                    currListViewAdress = addressTextBox.Text;
+                    if (currIndex + 1 == Adresses.Count)
+                        buttonForward.Enabled = false;
+                    else
+                        buttonForward.Enabled = true;
+                    if (currIndex - 1 == -1)
+                        buttonBack.Enabled = false;
+                    else
+                        buttonBack.Enabled = true;
+
+                    GetItems();
+                }
+                catch
+                {
+                    addressTextBox.Text = currListViewAdress;
+                }
+            }
+        }
+
+        private void aboutItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Explorer © 2015", "About Explorer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Back: buttonBack_Click(buttonBack, null);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        #endregion
+
+        private void InitializeColumns()
+        {
+            mainListView.ColumnClick += new ColumnClickEventHandler(ColumnNameClick);
+            ColumnHeader c = new ColumnHeader();
+            c.Text = "Name";
+            c.Width = c.Width + 80;
+            ColumnHeader c2 = new ColumnHeader();
+            c2.Text = "Size";
+            c2.Width = c2.Width + 60;
+            ColumnHeader c3 = new ColumnHeader();
+            c3.Text = "Type";
+            ColumnHeader c4 = new ColumnHeader();
+            c4.Text = "Changed";
+            c4.Width = c4.Width + 60;
+            mainListView.Columns.Add(c);
+            mainListView.Columns.Add(c2);
+            mainListView.Columns.Add(c3);
+            mainListView.Columns.Add(c4);
+        }
+
+        private void InitializeTreeView()
+        {
+            string[] str = Environment.GetLogicalDrives();
+            int n = 1;
+            foreach (string s in str)
+            {
+                try
+                {
+                    TreeNode tn = new TreeNode();
+                    tn.Name = s;
+                    tn.Text = "Local drive " + s;
+                    mainTreeView.Nodes.Add(tn.Name, tn.Text, 2);
+                    FileInfo f = new FileInfo(@s);
+                    string t = "";
+                    string[] str2 = Directory.GetDirectories(@s);
+                    foreach (string s2 in str2)
+                    {
+                        t = s2.Substring(s2.LastIndexOf('\\') + 1);
+                        ((TreeNode)mainTreeView.Nodes[n - 1]).Nodes.Add(s2, t, 0);
+                    }
+                }
+                catch { }
+                n++;
+            }
+            foreach (TreeNode tn in mainTreeView.Nodes)
+            {
+                for (int i = 65; i < 91; i++)
+                {
+                    char sym = Convert.ToChar(i);
+                    if (tn.Name == sym + ":\\")
+                        tn.SelectedImageIndex = 2;
+                }
+            }
+        }
+
+        private void GetItems()
+        {
+            FileInfo f = new FileInfo(@currListViewAdress);
+            string t = "";
+            string[] str2 = Directory.GetDirectories(@currListViewAdress);
+            string[] str3 = Directory.GetFiles(@currListViewAdress);
+            mainListView.Items.Clear();
+            ListViewItem lw = new ListViewItem();
+            if (mainListView.View == View.Details)
+            {
+                foreach (string s2 in str2)
+                {
+                    f = new FileInfo(@s2);
+                    string type = "Folder";
+                    t = s2.Substring(s2.LastIndexOf('\\') + 1);
+                    lw = new ListViewItem(new string[] { t, "", type, f.LastWriteTime.ToString() }, 0);
+                    lw.Name = s2;
+                    mainListView.Items.Add(lw);
+                }
+                foreach (string s2 in str3)
+                {
+                    f = new FileInfo(@s2);
+                    string type = "File";
+                    t = s2.Substring(s2.LastIndexOf('\\') + 1);
+                    lw = new ListViewItem(new string[] { t, f.Length.ToString() + " bytes", type, f.LastWriteTime.ToString() }, 1);
+                    lw.Name = s2;
+                    mainListView.Items.Add(lw);
+                }
+            }
+            else
+            {
+                foreach (string s2 in str2)
+                {
+                    f = new FileInfo(@s2);
+                    t = s2.Substring(s2.LastIndexOf('\\') + 1);
+                    lw = new ListViewItem(new string[] { t }, 0);
+                    lw.Name = s2;
+                    mainListView.Items.Add(lw);
+                }
+                foreach (string s2 in str3)
+                {
+                    f = new FileInfo(@s2);
+                    t = s2.Substring(s2.LastIndexOf('\\') + 1);
+                    lw = new ListViewItem(new string[] { t }, 1);
+                    lw.Name = s2;
+                    mainListView.Items.Add(lw);
+                }
+            }
+        }
+
+        private void GetItemsAfterSelect(TreeViewEventArgs e)
+        {
             currListViewAdress = e.Node.Name;
             addressTextBox.Text = currListViewAdress;
-            //заполнение ListView
+
             try
             {
                 if (mainListView.View != View.Tile)
@@ -144,152 +438,9 @@ namespace Explorer
                 }
             }
             catch { }
-
         }
 
-        private void iconsView_Click(object sender, EventArgs e)
-        {
-            mainListView.View = View.SmallIcon;
-        }
-
-        private void imagesView_Click(object sender, EventArgs e)
-        {
-            mainListView.View = View.LargeIcon;
-        }
-
-        private void tilesView_Click(object sender, EventArgs e)
-        {
-            mainListView.View = View.Tile;
-            mainListView.Items.Clear();
-            FileInfo f = new FileInfo(@currListViewAdress);
-            string t = "";
-            string[] str2 = Directory.GetDirectories(@currListViewAdress);
-            ListViewItem lw = new ListViewItem();
-            foreach (string s2 in str2)
-            {
-                f = new FileInfo(@s2);
-                t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                lw = new ListViewItem(new string[] { t }, 0);
-                lw.Name = s2;
-                mainListView.Items.Add(lw);
-            }
-            str2 = Directory.GetFiles(@currListViewAdress);
-            foreach (string s2 in str2)
-            {
-                f = new FileInfo(@s2);
-                t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                lw = new ListViewItem(new string[] { t }, 1);
-                lw.Name = s2;
-                mainListView.Items.Add(lw);
-            }
-        }
-
-        private void listView_Click(object sender, EventArgs e)
-        {
-            mainListView.View = View.List;
-        }
-
-        private void tableView_Click(object sender, EventArgs e)
-        {
-            mainListView.View = View.Details;
-            mainListView.Items.Clear();
-            FileInfo f = new FileInfo(@currListViewAdress);
-            string t = "";
-            string[] str2 = Directory.GetDirectories(@currListViewAdress);
-            ListViewItem lw = new ListViewItem();
-            foreach (string s2 in str2)
-            {
-                f = new FileInfo(@s2);
-                string type = "Folder";
-                t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                lw = new ListViewItem(new string[] { t, "", type, f.LastWriteTime.ToString() }, 0);
-                lw.Name = s2;
-                mainListView.Items.Add(lw);
-            }
-            str2 = Directory.GetFiles(@currListViewAdress);
-            foreach (string s2 in str2)
-            {
-                f = new FileInfo(@s2);
-                string type = "File";
-                t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                lw = new ListViewItem(new string[] { t, f.Length.ToString() + " bytes", type, f.LastWriteTime.ToString() }, 1);
-                lw.Name = s2;
-                mainListView.Items.Add(lw);
-            }
-        }
-
-        private void mainListView_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (mainListView.SelectedItems[0].Text.IndexOf('.') == -1)
-            {
-                Adresses.Add(mainListView.SelectedItems[0].Name);
-                currIndex++;
-                currListViewAdress = ((string)Adresses[currIndex]);
-                if (currIndex + 1 == Adresses.Count)
-                    buttonForward.Enabled = false;
-                else
-                    buttonForward.Enabled = true;
-                if(currIndex - 1 == -1)
-                    buttonBack.Enabled = false;
-                else
-                    buttonBack.Enabled = true;
-                currListViewAdress = mainListView.SelectedItems[0].Name;
-                addressTextBox.Text = currListViewAdress;
-                FileInfo f = new FileInfo(mainListView.SelectedItems[0].Name);
-                string t = "";
-                string[] str2 = Directory.GetDirectories(mainListView.SelectedItems[0].Name);
-                string[] str3 = Directory.GetFiles(mainListView.SelectedItems[0].Name);
-                mainListView.Items.Clear();
-                ListViewItem lw = new ListViewItem();
-                if (mainListView.View == View.Details)
-                {
-                    foreach (string s2 in str2)
-                    {
-                        f = new FileInfo(@s2);
-                        string type = "Folder";
-                        t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                        lw = new ListViewItem(new string[] { t, "", type, f.LastWriteTime.ToString() }, 0);
-                        lw.Name = s2;
-                        mainListView.Items.Add(lw);
-                    }
-                    foreach (string s2 in str3)
-                    {
-                        f = new FileInfo(@s2);
-                        string type = "File";
-                        t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                        lw = new ListViewItem(new string[] { t, f.Length.ToString() + " bytes", type, f.LastWriteTime.ToString() }, 1);
-                        lw.Name = s2;
-                        mainListView.Items.Add(lw);
-                    }
-                }
-                else
-                {
-                    foreach (string s2 in str2)
-                    {
-                        f = new FileInfo(@s2);
-                        t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                        lw = new ListViewItem(new string[] { t }, 0);
-                        lw.Name = s2;
-                        mainListView.Items.Add(lw);
-                    }
-                    foreach (string s2 in str3)
-                    {
-                        f = new FileInfo(@s2);
-                        t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                        lw = new ListViewItem(new string[] { t }, 1);
-                        lw.Name = s2;
-                        mainListView.Items.Add(lw);
-                    }
-                }
-            }
-            else
-            {
-                System.Diagnostics.Process MyProc = new System.Diagnostics.Process();
-                MyProc.StartInfo.FileName = mainListView.SelectedItems[0].Name;
-                MyProc.Start();
-            }
-        }
-        private void ClickOnColumn(object sender, ColumnClickEventArgs e)
+        private void ColumnNameClick(object sender, ColumnClickEventArgs e)
         {
             if (e.Column == 0)
             {
@@ -300,323 +451,5 @@ namespace Explorer
             }
         }
 
-        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            mainListView.Refresh();
-        }
-
-        private void ExitMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void mainTreeView_BeforeExpand(object sender, TreeViewCancelEventArgs e)
-        {
-            int i = 0;
-
-            try
-            {
-                foreach (TreeNode tn in e.Node.Nodes)
-                {
-                    string[] str2 = Directory.GetDirectories(@tn.Name);
-                    foreach (string str in str2)
-                    {
-                        TreeNode temp = new TreeNode();
-                        temp.Name = str;
-                        temp.Text = str.Substring(str.LastIndexOf('\\') + 1);
-                        e.Node.Nodes[i].Nodes.Add(temp);
-                    }
-                    i++;
-                }
-            }
-            catch { }
-        }
-
-        private void buttonBack_Click(object sender, EventArgs e)
-        {
-            if (currIndex - 1 != -1)
-            {
-                currIndex--;
-                currListViewAdress = ((string)Adresses[currIndex]);
-                if (currIndex + 1 == Adresses.Count)
-                    buttonForward.Enabled = false;
-                else
-                    buttonForward.Enabled = true;
-                if (currIndex - 1 == -1)
-                    buttonBack.Enabled = false;
-                else
-                    buttonBack.Enabled = true;
-                addressTextBox.Text = currListViewAdress;
-                FileInfo f = new FileInfo(@currListViewAdress);
-                string t = "";
-                string[] str2 = Directory.GetDirectories(@currListViewAdress);
-                string[] str3 = Directory.GetFiles(@currListViewAdress);
-                mainListView.Items.Clear();
-                ListViewItem lw = new ListViewItem();
-                if (mainListView.View == View.Details)
-                {
-                    foreach (string s2 in str2)
-                    {
-                        f = new FileInfo(@s2);
-                        string type = "Folder";
-                        t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                        lw = new ListViewItem(new string[] { t, "", type, f.LastWriteTime.ToString() }, 0);
-                        lw.Name = s2;
-                        mainListView.Items.Add(lw);
-                    }
-                    foreach (string s2 in str3)
-                    {
-                        f = new FileInfo(@s2);
-                        string type = "File";
-                        t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                        lw = new ListViewItem(new string[] { t, f.Length.ToString() + " bytes", type, f.LastWriteTime.ToString() }, 1);
-                        lw.Name = s2;
-                        mainListView.Items.Add(lw);
-                    }
-                }
-                else
-                {
-                    foreach (string s2 in str2)
-                    {
-                        f = new FileInfo(@s2);
-                        t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                        lw = new ListViewItem(new string[] { t }, 0);
-                        lw.Name = s2;
-                        mainListView.Items.Add(lw);
-                    }
-                    foreach (string s2 in str3)
-                    {
-                        f = new FileInfo(@s2);
-                        t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                        lw = new ListViewItem(new string[] { t }, 1);
-                        lw.Name = s2;
-                        mainListView.Items.Add(lw);
-                    }
-                }
-            }
-        }
-
-        private void buttonForward_Click(object sender, EventArgs e)
-        {
-            if (currIndex + 1 != Adresses.Count)
-            {
-                currIndex++;
-                currListViewAdress = ((string)Adresses[currIndex]);
-                if (currIndex + 1 == Adresses.Count)
-                    buttonForward.Enabled = false;
-                else
-                    buttonForward.Enabled = true;
-                if (currIndex - 1 == -1)
-                    buttonBack.Enabled = false;
-                else
-                    buttonBack.Enabled = true;
-                addressTextBox.Text = currListViewAdress;
-                FileInfo f = new FileInfo(@currListViewAdress);
-                string t = "";
-                string[] str2 = Directory.GetDirectories(@currListViewAdress);
-                string[] str3 = Directory.GetFiles(@currListViewAdress);
-                mainListView.Items.Clear();
-                ListViewItem lw = new ListViewItem();
-                if (mainListView.View == View.Details)
-                {
-                    foreach (string s2 in str2)
-                    {
-                        f = new FileInfo(@s2);
-                        string type = "Folder";
-                        t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                        lw = new ListViewItem(new string[] { t, "", type, f.LastWriteTime.ToString() }, 0);
-                        lw.Name = s2;
-                        mainListView.Items.Add(lw);
-                    }
-                    foreach (string s2 in str3)
-                    {
-                        f = new FileInfo(@s2);
-                        string type = "File";
-                        t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                        lw = new ListViewItem(new string[] { t, f.Length.ToString() + " bytes", type, f.LastWriteTime.ToString() }, 1);
-                        lw.Name = s2;
-                        mainListView.Items.Add(lw);
-                    }
-                }
-                else
-                {
-                    foreach (string s2 in str2)
-                    {
-                        f = new FileInfo(@s2);
-                        t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                        lw = new ListViewItem(new string[] { t }, 0);
-                        lw.Name = s2;
-                        mainListView.Items.Add(lw);
-                    }
-                    foreach (string s2 in str3)
-                    {
-                        f = new FileInfo(@s2);
-                        t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                        lw = new ListViewItem(new string[] { t }, 1);
-                        lw.Name = s2;
-                        mainListView.Items.Add(lw);
-                    }
-                }
-            }
-        }
-
-        private void addressTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyValue == (int) Keys.Enter)
-            {
-                try
-                {
-                    string[] str2 = Directory.GetDirectories(addressTextBox.Text);
-                    string[] str3 = Directory.GetFiles(addressTextBox.Text);
-                    currIndex++;
-                    currListViewAdress = addressTextBox.Text;
-                    Adresses.Add(addressTextBox.Text);
-                    if (currIndex + 1 == Adresses.Count)
-                        buttonForward.Enabled = false;
-                    else
-                        buttonForward.Enabled = true;
-                    if (currIndex - 1 == -1)
-                        buttonBack.Enabled = false;
-                    else
-                        buttonBack.Enabled = true;
-                    FileInfo f = new FileInfo(addressTextBox.Text);
-                    string t = "";                    
-                    mainListView.Items.Clear();
-                    ListViewItem lw = new ListViewItem();
-                    if (mainListView.View == View.Details)
-                    {
-                        foreach (string s2 in str2)
-                        {
-                            f = new FileInfo(@s2);
-                            string type = "Folder";
-                            t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                            lw = new ListViewItem(new string[] { t, "", type, f.LastWriteTime.ToString() }, 0);
-                            lw.Name = s2;
-                            mainListView.Items.Add(lw);
-                        }
-                        foreach (string s2 in str3)
-                        {
-                            f = new FileInfo(@s2);
-                            string type = "File";
-                            t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                            lw = new ListViewItem(new string[] { t, f.Length.ToString() + " bytes", type, f.LastWriteTime.ToString() }, 1);
-                            lw.Name = s2;
-                            mainListView.Items.Add(lw);
-                        }
-                    }
-                    else
-                    {
-                        foreach (string s2 in str2)
-                        {
-                            f = new FileInfo(@s2);
-                            t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                            lw = new ListViewItem(new string[] { t }, 0);
-                            lw.Name = s2;
-                            mainListView.Items.Add(lw);
-                        }
-                        foreach (string s2 in str3)
-                        {
-                            f = new FileInfo(@s2);
-                            t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                            lw = new ListViewItem(new string[] { t }, 1);
-                            lw.Name = s2;
-                            mainListView.Items.Add(lw);
-                        }
-                    }
-                }
-                catch
-                {
-                    addressTextBox.Text = currListViewAdress;
-                }
-            }
-        }
-
-        private void toolStripButton3_Click(object sender, EventArgs e)
-        {
-            int lio = addressTextBox.Text.LastIndexOf('\\');
-            if (lio != -1)
-            {
-                addressTextBox.Text = addressTextBox.Text.Substring(0, lio);
-                try
-                {
-                    string[] str2 = Directory.GetDirectories(addressTextBox.Text + "\\");
-                    string[] str3 = Directory.GetFiles(addressTextBox.Text + "\\");
-                    currIndex--;
-                    currListViewAdress = addressTextBox.Text;
-                    if (currIndex + 1 == Adresses.Count)
-                        buttonForward.Enabled = false;
-                    else
-                        buttonForward.Enabled = true;
-                    if (currIndex - 1 == -1)
-                        buttonBack.Enabled = false;
-                    else
-                        buttonBack.Enabled = true;
-                    FileInfo f = new FileInfo(addressTextBox.Text + "\\");
-                    string t = "";
-                    mainListView.Items.Clear();
-                    ListViewItem lw = new ListViewItem();
-                    if (mainListView.View == View.Details)
-                    {
-                        foreach (string s2 in str2)
-                        {
-                            f = new FileInfo(@s2);
-                            string type = "Folder";
-                            t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                            lw = new ListViewItem(new string[] { t, "", type, f.LastWriteTime.ToString() }, 0);
-                            lw.Name = s2;
-                            mainListView.Items.Add(lw);
-                        }
-                        foreach (string s2 in str3)
-                        {
-                            f = new FileInfo(@s2);
-                            string type = "File";
-                            t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                            lw = new ListViewItem(new string[] { t, f.Length.ToString() + " bytes", type, f.LastWriteTime.ToString() }, 1);
-                            lw.Name = s2;
-                            mainListView.Items.Add(lw);
-                        }
-                    }
-                    else
-                    {
-                        foreach (string s2 in str2)
-                        {
-                            f = new FileInfo(@s2);
-                            t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                            lw = new ListViewItem(new string[] { t }, 0);
-                            lw.Name = s2;
-                            mainListView.Items.Add(lw);
-                        }
-                        foreach (string s2 in str3)
-                        {
-                            f = new FileInfo(@s2);
-                            t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                            lw = new ListViewItem(new string[] { t }, 1);
-                            lw.Name = s2;
-                            mainListView.Items.Add(lw);
-                        }
-                    }
-                }
-                catch
-                {
-                    addressTextBox.Text = currListViewAdress;
-                }
-            }
-        }
-
-        private void aboutItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Explorer © 2015", "About Explorer", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void MainForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.Back: buttonBack_Click(buttonBack, null);
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 }
