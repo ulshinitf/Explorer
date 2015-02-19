@@ -9,7 +9,7 @@ namespace Explorer
     {
         ArrayList Adresses = new ArrayList();
         int currIndex =-1;
-        string currListViewAdress = "";
+        string currListViewAddress = "";
 
         public MainForm()
         {
@@ -45,7 +45,7 @@ namespace Explorer
                 buttonBack.Enabled = true;
             mainListView.Items.Clear();
 
-            GetItemsAfterSelect(e);
+            GetItemsOnTreeViewSelect(e);
         }
 
         private void iconsView_Click(object sender, EventArgs e)
@@ -62,27 +62,8 @@ namespace Explorer
         {
             mainListView.View = View.Tile;
             mainListView.Items.Clear();
-            FileInfo f = new FileInfo(@currListViewAdress);
-            string t = "";
-            string[] str2 = Directory.GetDirectories(@currListViewAdress);
-            ListViewItem lw = new ListViewItem();
-            foreach (string s2 in str2)
-            {
-                f = new FileInfo(@s2);
-                t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                lw = new ListViewItem(new string[] { t }, 0);
-                lw.Name = s2;
-                mainListView.Items.Add(lw);
-            }
-            str2 = Directory.GetFiles(@currListViewAdress);
-            foreach (string s2 in str2)
-            {
-                f = new FileInfo(@s2);
-                t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                lw = new ListViewItem(new string[] { t }, 1);
-                lw.Name = s2;
-                mainListView.Items.Add(lw);
-            }
+
+            GetItems(currListViewAddress);
         }
 
         private void listView_Click(object sender, EventArgs e)
@@ -94,7 +75,7 @@ namespace Explorer
         {
             mainListView.View = View.Details;
             mainListView.Items.Clear();
-            GetItems();
+            GetItems(currListViewAddress);
         }
 
         private void mainListView_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -103,7 +84,7 @@ namespace Explorer
             {
                 Adresses.Add(mainListView.SelectedItems[0].Name);
                 currIndex++;
-                currListViewAdress = ((string)Adresses[currIndex]);
+                currListViewAddress = ((string)Adresses[currIndex]);
                 if (currIndex + 1 == Adresses.Count)
                     buttonForward.Enabled = false;
                 else
@@ -112,10 +93,10 @@ namespace Explorer
                     buttonBack.Enabled = false;
                 else
                     buttonBack.Enabled = true;
-                currListViewAdress = mainListView.SelectedItems[0].Name;
-                addressTextBox.Text = currListViewAdress;
+                currListViewAddress = mainListView.SelectedItems[0].Name;
+                addressTextBox.Text = currListViewAddress;
 
-                GetItems();
+                GetItems(currListViewAddress);
             }
             else
             {
@@ -162,7 +143,7 @@ namespace Explorer
             if (currIndex - 1 != -1)
             {
                 currIndex--;
-                currListViewAdress = ((string)Adresses[currIndex]);
+                currListViewAddress = ((string)Adresses[currIndex]);
                 if (currIndex + 1 == Adresses.Count)
                     buttonForward.Enabled = false;
                 else
@@ -171,9 +152,9 @@ namespace Explorer
                     buttonBack.Enabled = false;
                 else
                     buttonBack.Enabled = true;
-                addressTextBox.Text = currListViewAdress;
+                addressTextBox.Text = currListViewAddress;
 
-                GetItems();
+                GetItems(currListViewAddress);
             }
         }
 
@@ -182,7 +163,7 @@ namespace Explorer
             if (currIndex + 1 != Adresses.Count)
             {
                 currIndex++;
-                currListViewAdress = ((string)Adresses[currIndex]);
+                currListViewAddress = ((string)Adresses[currIndex]);
                 if (currIndex + 1 == Adresses.Count)
                     buttonForward.Enabled = false;
                 else
@@ -191,9 +172,9 @@ namespace Explorer
                     buttonBack.Enabled = false;
                 else
                     buttonBack.Enabled = true;
-                addressTextBox.Text = currListViewAdress;
+                addressTextBox.Text = currListViewAddress;
 
-                GetItems();
+                GetItems(currListViewAddress);
             }
         }
 
@@ -206,7 +187,7 @@ namespace Explorer
                     string[] str2 = Directory.GetDirectories(addressTextBox.Text);
                     string[] str3 = Directory.GetFiles(addressTextBox.Text);
                     currIndex++;
-                    currListViewAdress = addressTextBox.Text;
+                    currListViewAddress = addressTextBox.Text;
                     Adresses.Add(addressTextBox.Text);
                     if (currIndex + 1 == Adresses.Count)
                         buttonForward.Enabled = false;
@@ -217,11 +198,11 @@ namespace Explorer
                     else
                         buttonBack.Enabled = true;
 
-                    GetItems();
+                    GetItems(currListViewAddress);
                 }
                 catch
                 {
-                    addressTextBox.Text = currListViewAdress;
+                    addressTextBox.Text = currListViewAddress;
                 }
             }
         }
@@ -237,7 +218,7 @@ namespace Explorer
                     string[] str2 = Directory.GetDirectories(addressTextBox.Text + "\\");
                     string[] str3 = Directory.GetFiles(addressTextBox.Text + "\\");
                     currIndex--;
-                    currListViewAdress = addressTextBox.Text;
+                    currListViewAddress = addressTextBox.Text;
                     if (currIndex + 1 == Adresses.Count)
                         buttonForward.Enabled = false;
                     else
@@ -247,11 +228,11 @@ namespace Explorer
                     else
                         buttonBack.Enabled = true;
 
-                    GetItems();
+                    GetItems(currListViewAddress);
                 }
                 catch
                 {
-                    addressTextBox.Text = currListViewAdress;
+                    addressTextBox.Text = currListViewAddress;
                 }
             }
         }
@@ -273,6 +254,8 @@ namespace Explorer
         }
 
         #endregion
+
+        #region Initializers
 
         private void InitializeColumns()
         {
@@ -329,12 +312,14 @@ namespace Explorer
             }
         }
 
-        private void GetItems()
+        #endregion
+
+        private void GetItems(string address)
         {
-            FileInfo f = new FileInfo(@currListViewAdress);
+            FileInfo f = new FileInfo(address);
             string t = "";
-            string[] str2 = Directory.GetDirectories(@currListViewAdress);
-            string[] str3 = Directory.GetFiles(@currListViewAdress);
+            string[] str2 = Directory.GetDirectories(address);
+            string[] str3 = Directory.GetFiles(address);
             mainListView.Items.Clear();
             ListViewItem lw = new ListViewItem();
             if (mainListView.View == View.Details)
@@ -379,65 +364,12 @@ namespace Explorer
             }
         }
 
-        private void GetItemsAfterSelect(TreeViewEventArgs e)
+        private void GetItemsOnTreeViewSelect(TreeViewEventArgs e)
         {
-            currListViewAdress = e.Node.Name;
-            addressTextBox.Text = currListViewAdress;
+            currListViewAddress = e.Node.Name;
+            addressTextBox.Text = currListViewAddress;
 
-            try
-            {
-                if (mainListView.View != View.Tile)
-                {
-                    FileInfo f = new FileInfo(@e.Node.Name);
-                    string t = "";
-                    string[] str2 = Directory.GetDirectories(@e.Node.Name);
-                    ListViewItem lw = new ListViewItem();
-                    foreach (string s2 in str2)
-                    {
-                        f = new FileInfo(@s2);
-                        string type = "Folder";
-                        t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                        lw = new ListViewItem(new string[] { t, "", type, f.LastWriteTime.ToString() }, 0);
-                        lw.Name = s2;
-                        mainListView.Items.Add(lw);
-                    }
-                    str2 = Directory.GetFiles(@e.Node.Name);
-                    foreach (string s2 in str2)
-                    {
-                        f = new FileInfo(@s2);
-                        string type = "File";
-                        t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                        lw = new ListViewItem(new string[] { t, f.Length.ToString() + " bytes", type, f.LastWriteTime.ToString() }, 1);
-                        lw.Name = s2;
-                        mainListView.Items.Add(lw);
-                    }
-                }
-                else
-                {
-                    FileInfo f = new FileInfo(@e.Node.Name);
-                    string t = "";
-                    string[] str2 = Directory.GetDirectories(@e.Node.Name);
-                    ListViewItem lw = new ListViewItem();
-                    foreach (string s2 in str2)
-                    {
-                        f = new FileInfo(@s2);
-                        t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                        lw = new ListViewItem(new string[] { t }, 0);
-                        lw.Name = s2;
-                        mainListView.Items.Add(lw);
-                    }
-                    str2 = Directory.GetFiles(@e.Node.Name);
-                    foreach (string s2 in str2)
-                    {
-                        f = new FileInfo(@s2);
-                        t = s2.Substring(s2.LastIndexOf('\\') + 1);
-                        lw = new ListViewItem(new string[] { t }, 1);
-                        lw.Name = s2;
-                        mainListView.Items.Add(lw);
-                    }
-                }
-            }
-            catch { }
+            GetItems(@currListViewAddress);
         }
 
         private void ColumnNameClick(object sender, ColumnClickEventArgs e)
